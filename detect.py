@@ -214,10 +214,28 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
 
 
 def parse_opt():
+    '''
+    --weights:权重的路径地址
+    --source:测试数据，可以是图片/视频路径，也可以是'0'(电脑自带摄像头),也可以是rtsp等视频流
+    --output:网络预测之后的图片/视频的保存路径
+    --img-size:网络输入图片大小
+    --conf-thres:置信度阈值
+    --iou-thres:做nms的iou阈值
+    --device:是用GPU还是CPU做推理
+    --view-img:是否展示预测之后的图片/视频，默认False
+    --save-txt:是否将预测的框坐标以txt文件形式保存，默认False
+    --classes:设置只保留某一部分类别，形如0或者0 2 3
+    --agnostic-nms:进行nms是否也去除不同类别之间的框，默认False
+    --augment:推理的时候进行多尺度，翻转等操作(TTA)推理
+    --update:如果为True，则对所有模型进行strip_optimizer操作，去除pt文件中的优化器等信息，默认为False
+    --project：推理的结果保存在runs/detect目录下
+    --name：结果保存的文件夹名称
+    '''
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path(s)')
-    parser.add_argument('--source', type=str, default=ROOT / 'data/images', help='file/dir/URL/glob, 0 for webcam')
-    parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='(optional) dataset.yaml path')
+    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp4/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--source', type=str, default='C:/DiaoFeng_WS/DeepLearning/labelImg/PascalVOC_visual_object_classs/VOCdevkit/test/', help='file/dir/URL/glob, 0 for webcam')
+    parser.add_argument('--source', type=str, default='0', help='file/dir/URL/glob, 0 for webcam')
+    parser.add_argument('--data', type=str, default='', help='(optional) dataset.yaml path')
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='NMS IoU threshold')
